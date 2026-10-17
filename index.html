@@ -1,54 +1,69 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Find Your Next Role — Hero</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Your Next Role</title>
 <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #0f1115;
-    color: #f4f4f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #0a0a0b;
+    color: #fafafa;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    padding: 40px 20px;
+    padding: 80px 24px;
   }
   .hero {
-    max-width: 720px;
-    text-align: left;
+    max-width: 740px;
+    width: 100%;
   }
-  .quote {
-    font-size: 2.4rem;
-    font-weight: 500;
-    line-height: 1.25;
-    margin: 0 0 24px 0;
-    min-height: 140px;
+  .label {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #71717a;
+    margin-bottom: 28px;
   }
   .status {
-    font-size: 1.35rem;
+    font-size: clamp(1.75rem, 4.5vw, 2.65rem);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    min-height: 3.2em;
+    margin-bottom: 12px;
+  }
+  .thought {
+    font-size: 1.3rem;
     color: #a1a1aa;
-    margin: 0 0 32px 0;
-    min-height: 60px;
-    transition: opacity 0.4s ease;
+    min-height: 1.8em;
+    margin-bottom: 52px;
+    font-weight: 400;
   }
   .cta {
-    font-size: 1.1rem;
-    color: #e4e4e7;
-    line-height: 1.5;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #d4d4d8;
+    max-width: 540px;
   }
   .cta strong {
-    color: #fff;
+    color: #ffffff;
     font-weight: 600;
+  }
+  .status, .thought {
+    transition: opacity 0.5s ease;
   }
   .cursor {
     display: inline-block;
     width: 2px;
-    height: 1em;
-    background: #fff;
+    height: 0.85em;
+    background: #fafafa;
     margin-left: 2px;
-    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    animation: blink 1.1s step-end infinite;
   }
   @keyframes blink {
     50% { opacity: 0; }
@@ -57,59 +72,65 @@
 </head>
 <body>
   <div class="hero">
-    <p class="quote" id="quote">If I’m not a Director anymore, who am I?<span class="cursor"></span></p>
-    <p class="status" id="status">I’m still in the role and quietly looking.</p>
+    <div class="label">Find Your Next Role</div>
+    
+    <div class="status" id="status">I’m still in the role and quietly looking<span class="cursor"></span></div>
+    <div class="thought" id="thought">trying to find a new role in a new company</div>
+    
     <p class="cta">
       <strong>Find Your Next Role</strong> helps you claim your strengths, aim at roles the market pays for, and run a search that doesn’t depend on the old title.
     </p>
   </div>
 
 <script>
-const quotes = [
-  "If I’m not a Director anymore, who am I?",
-  "If I’m not a Head of anymore, who am I?",
-  "If I’m not a VP anymore, who am I?",
-  "I keep applying and nothing lands.",
-  "I don’t know how to talk about myself without the old title."
+const pairs = [
+  {
+    status: "I’m still in the role and quietly looking",
+    thought: "trying to find a new role in a new company"
+  },
+  {
+    status: "thinking of leaving",
+    thought: "figuring out what a fractional or portfolio path even looks like"
+  },
+  {
+    status: "already out",
+    thought: "applying and getting nowhere"
+  },
+  {
+    status: "in between jobs",
+    thought: "not sure how to talk about myself without the old title"
+  },
+  {
+    status: "burned out but still employed",
+    thought: "scared this will be a step down"
+  }
 ];
 
-const statuses = [
-  "I’m still in the role and quietly looking.",
-  "I’m thinking of leaving and don’t know where to start.",
-  "I’ve already left and nothing is landing.",
-  "I’m trying to figure out a fractional or portfolio path.",
-  "I’m scared this will be a step down."
-];
-
-let qIndex = 0;
-let sIndex = 0;
+let index = 0;
 
 function rotate() {
-  const quoteEl = document.getElementById("quote");
   const statusEl = document.getElementById("status");
+  const thoughtEl = document.getElementById("thought");
 
-  // Fade out
-  quoteEl.style.opacity = 0;
-  statusEl.style.opacity = 0;
+  statusEl.style.opacity = "0";
+  thoughtEl.style.opacity = "0";
 
   setTimeout(() => {
-    qIndex = (qIndex + 1) % quotes.length;
-    sIndex = (sIndex + 1) % statuses.length;
+    index = (index + 1) % pairs.length;
+    const current = pairs[index];
 
-    quoteEl.innerHTML = quotes[qIndex] + '<span class="cursor"></span>';
-    statusEl.textContent = statuses[sIndex];
+    statusEl.innerHTML = current.status + '<span class="cursor"></span>';
+    thoughtEl.textContent = current.thought;
 
-    // Fade in
-    quoteEl.style.opacity = 1;
-    statusEl.style.opacity = 1;
-  }, 400);
+    statusEl.style.opacity = "1";
+    thoughtEl.style.opacity = "1";
+  }, 480);
 }
 
-// Initial opacity
-document.getElementById("quote").style.transition = "opacity 0.4s ease";
-document.getElementById("status").style.transition = "opacity 0.4s ease";
-
-setInterval(rotate, 3800);
+setInterval(rotate, 4600);
 </script>
 </body>
 </html>
+```
+
+Без «used to be». Только текущие статусы и связанные с ними мысли.
