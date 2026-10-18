@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Role Accelerator</title>
-<meta name="description" content="Find Your Next Role helps experienced professionals claim their strengths and find the right role — full-time, fractional, or portfolio — building and using your personal AI agents that work outside standard application routes">
+<meta name="description" content="Find Your Next Role helps experienced professionals claim their strengths and land the right full-time, fractional or portfolio role with personal AI agents that search outside standard application routes">
 <style>
   :root{
     --bg:#F4F3F9; --surface:#FFFFFF; --surface-2:#FBFAFE;
@@ -71,15 +71,18 @@
   /* interactive statuses — the main hero */
   .status{
     font-size:clamp(30px,5vw,54px); font-weight:800; letter-spacing:-.02em; line-height:1.08;
-    min-height:3.3em; display:flex; align-items:flex-end;
+    min-height:3.3em; display:flex; align-items:flex-start;
   }
-  .status-line{display:block; max-width:22ch; text-wrap:balance}
-  .pill{display:inline; color:var(--ink); animation:pop-in .45s cubic-bezier(.2,.9,.3,1.2) both}
+  .status-line{display:block; max-width:22ch}
+  .pill{display:inline; color:var(--ink)}
   .pill.lead{color:var(--accent)}
-  .arrow{display:inline; color:var(--muted); animation:pop-in .3s ease both}
-  .status-line .out{animation:pop-out .3s ease forwards}
-  @keyframes pop-in{from{opacity:0; filter:blur(6px)}to{opacity:1; filter:none}}
-  @keyframes pop-out{to{opacity:0; filter:blur(6px)}}
+  .arrow{display:inline; color:var(--muted)}
+  .caret{
+    display:inline-block; width:.07em; height:.9em; margin-left:.05em; vertical-align:-.08em;
+    background:var(--accent); border-radius:1px; animation:caret 1s steps(1) infinite;
+  }
+  .caret.busy{animation:none}
+  @keyframes caret{50%{opacity:0}}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
   .status-static{display:flex; flex-direction:column; gap:.4em; font-size:.6em}
   .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
@@ -162,15 +165,19 @@
   .fit .dot{width:10px;height:10px;border-radius:50%;flex:none}
   .dot-yes{background:var(--open)} .dot-no{background:var(--stop)}
 
-  .duo{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px}
-  .person{
-    display:inline-flex; align-items:center; gap:10px; padding:8px 14px 8px 8px;
-    background:var(--surface); border:1px solid var(--hairline); border-radius:999px; font-weight:650;
+  .team{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; align-items:stretch}
+  .person-head{display:flex; align-items:center; gap:16px; margin-bottom:16px}
+  .photo{
+    width:84px; height:84px; border-radius:16px; object-fit:cover; flex:none;
+    border:1px solid var(--hairline); background:var(--surface-2);
   }
   .avatar{
-    width:30px;height:30px;border-radius:50%; display:grid; place-items:center;
-    background:var(--accent-soft); color:var(--accent); font-family:var(--mono); font-size:13px; font-weight:700;
+    width:84px; height:84px; border-radius:16px; flex:none; display:grid; place-items:center;
+    background:var(--accent-soft); color:var(--accent); font-family:var(--mono); font-size:28px; font-weight:700;
   }
+  .person-name{font-weight:750; font-size:20px; letter-spacing:-.01em; margin:0 0 6px}
+  .person-tags{font-family:var(--mono); font-size:11.5px; font-weight:650; letter-spacing:.08em; text-transform:uppercase; color:var(--accent)}
+  .together{margin-top:20px}
 
   .cta{
     margin-top:clamp(56px,8vw,88px); padding:clamp(26px,5vw,48px);
@@ -193,32 +200,33 @@
 
   <!-- Hero -->
   <header class="hero">
+    <div class="eyebrow" style="margin-bottom:clamp(18px,3vw,28px)">Full-time · Fractional · Portfolio career</div>
     <div class="status">
       <div class="status-line" id="status-line" aria-hidden="true"></div>
       <ul class="sr-only">
-        <li>I’m still in the role and quietly thinking of leaving but think this will be a step down</li>
+        <li>I’m still in the role and quietly thinking of leaving</li>
         <li>I’m already out figuring out what a fractional or portfolio path looks like</li>
         <li>I’m already out applying and getting nowhere</li>
         <li>I’m in between jobs → not sure how to talk about myself without the old title</li>
       </ul>
     </div>
 
-    <h1 class="subhead"><span class="hi">Find Your Next Role</span> helps experienced professionals claim their strengths and find the right role — full-time, fractional, or portfolio — building and using your personal AI agents that work outside standard application routes</h1>
-    <p class="lede">For experienced professionals (8+ years) — still in a company or already out — who need clarity on the next path and how to start moving.</p>
+    <h1 class="subhead"><span class="hi">Find Your Next Role</span> helps experienced professionals claim their strengths and land the right full-time, fractional or portfolio role with personal AI agents that search outside standard application routes</h1>
+    <p class="lede">For professionals with 8+ years of experience, still in a company or already out, who need clarity on the next path and how to start moving</p>
 
     <div class="hero-cta"><a class="btn" href="#apply">Apply for a 30-minute qualifying call <span aria-hidden="true">→</span></a></div>
   </header>
 
   <!-- Pain mirror -->
   <section class="mirror">
-    <p class="first">You’ve updated your CV a few times. You’ve scrolled LinkedIn. You’ve tried a couple of AI tools.</p>
-    <p class="second">But you’re still not sure how to present yourself in a new context, which roles are realistic, or how to stop applying to things that go nowhere. The longer it takes, the more the previous identity and the fear of a step down start to matter.</p>
+    <p class="first">You’ve updated your CV a few times. You’ve scrolled LinkedIn. You’ve tried a couple of AI tools</p>
+    <p class="second">But you’re still not sure how to present yourself in a new context, which roles are realistic, or how to stop applying to things that go nowhere. The longer it takes, the more the previous identity and the fear of a step down start to matter</p>
   </section>
 
   <!-- Why now -->
   <section class="sec">
     <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">Why now</h2></div>
-    <p class="body">AI is rewriting which skills matter and how companies hire. At the same time, the ways of working have expanded — full-time roles, fractional work, solo consulting, and portfolio careers are all now realistic options.</p>
+    <p class="body">AI is rewriting which skills matter and how companies hire. At the same time, the ways of working have expanded — full-time roles, fractional work, solo consulting, and portfolio careers are all now realistic options</p>
   </section>
 
   <!-- What this is -->
@@ -227,19 +235,19 @@
     <p class="product"><span class="hi">Role Accelerator</span></p>
     <p class="body muted" style="margin-bottom:20px">An 8-session program that combines two things most people try to do separately:</p>
     <div class="grid">
-      <div class="card"><span class="card-num">1</span><h3 class="card-name">Direction</h3><p>Figure out what you’re actually good at, what you don’t want anymore, and what shape of work fits you.</p></div>
-      <div class="card"><span class="card-num">2</span><h3 class="card-name">System</h3><p>Build and personalise an AI agent that searches for roles matching your profile and path, outside standard application routes.</p></div>
+      <div class="card"><span class="card-num">1</span><h3 class="card-name">Direction</h3><p>Figure out what you’re actually good at, what you don’t want anymore, and what shape of work fits you</p></div>
+      <div class="card"><span class="card-num">2</span><h3 class="card-name">System</h3><p>Build and personalise an AI agent that searches for roles matching your profile and path, outside standard application routes</p></div>
     </div>
-    <p class="body" style="margin-top:20px">Two experts work with you: one on direction, one on the AI system and hiring reality.</p>
-    <div class="nots"><span class="not">Not a course.</span><span class="not">Not a community.</span><span class="not">Not an agent you switch on alone.</span></div>
+    <p class="body" style="margin-top:20px">Two experts work with you: one on direction, one on the AI system and hiring reality</p>
+    <div class="nots"><span class="not">Not a course</span><span class="not">Not a community</span><span class="not">Not an agent you switch on alone</span></div>
   </section>
 
   <!-- How it works -->
   <section class="sec">
-    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">How it works</h2><p class="sec-note">The program is individual. We adjust the focus based on your situation.</p></div>
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">How it works</h2><p class="sec-note">The program is individual. We adjust the focus based on your situation</p></div>
     <div class="steps">
-      <div class="card"><span class="card-num">1</span><h3 class="card-name">Direction</h3><p>We review your professional assets and skills, what energises you, what you no longer want, and what you can already claim. This becomes the basis for realistic positioning.</p></div>
-      <div class="card"><span class="card-num">2</span><h3 class="card-name">Match to the market</h3><p>We map roles and formats that fit your profile — full-time, fractional, project-based, or portfolio — and translate your strengths into how the market describes and pays for them.</p></div>
+      <div class="card"><span class="card-num">1</span><h3 class="card-name">Direction</h3><p>We review your professional assets and skills, what energises you, what you no longer want, and what you can already claim. This becomes the basis for realistic positioning</p></div>
+      <div class="card"><span class="card-num">2</span><h3 class="card-name">Match to the market</h3><p>We map roles and formats that fit your profile — full-time, fractional, project-based, or portfolio — and translate your strengths into how the market describes and pays for them</p></div>
       <div class="card"><span class="card-num">3</span><h3 class="card-name">Materials and system</h3>
         <ul class="list">
           <li>Build ready-to-send materials (master CV + LinkedIn)</li>
@@ -249,12 +257,12 @@
         </ul>
       </div>
     </div>
-    <p class="foot">This sequence works whether you’re looking for a full-time role or building a fractional / portfolio path.</p>
+    <p class="foot">This sequence works whether you’re looking for a full-time role or building a fractional / portfolio path</p>
   </section>
 
   <!-- What you will have -->
   <section class="sec">
-    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">What you will have</h2><p class="sec-note">Enough clarity to stop guessing and enough practical support to take the next step.</p></div>
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">What you will have</h2><p class="sec-note">Enough clarity to stop guessing and enough practical support to take the next step</p></div>
     <p class="body" style="font-weight:650">You’ll leave with:</p>
     <div class="checks">
       <div class="check"><span class="tick" aria-hidden="true">✓</span>A clearer understanding of what fits you and what doesn’t</div>
@@ -272,9 +280,9 @@
     <div class="card price">
       <div class="amount">€1500</div>
       <div>
-        <p class="body" style="color:var(--ink); font-weight:650">€1500 for the 8-session Role Accelerator.</p>
-        <p class="body" style="margin-top:8px">Includes direction work, personalised AI search system, master CV + LinkedIn, and conversation preparation.</p>
-        <span class="tag">Limited places per cycle.</span>
+        <p class="body" style="color:var(--ink); font-weight:650">€1500 for the 8-session Role Accelerator</p>
+        <p class="body" style="margin-top:8px">Includes direction work, personalised AI search system, master CV + LinkedIn, and conversation preparation</p>
+        <span class="tag">Limited places per cycle</span>
       </div>
     </div>
   </section>
@@ -282,25 +290,45 @@
   <!-- Fit -->
   <section class="sec">
     <div class="grid fit">
-      <div class="card"><h3 class="card-name"><span class="dot dot-yes"></span>Who it is for</h3><p>Senior professionals, consultants, and fractional experts with 8+ years of experience who are changing roles (full-time, fractional, or project-based) and want both the internal clarity and the practical system.</p></div>
-      <div class="card"><h3 class="card-name"><span class="dot dot-no"></span>Who it is not for</h3><p>People looking for a passive course, a coding bootcamp, a pure AI agent, or a rescue program that does the work for them. Also not for those who mainly want therapy or who are not ready to do the positioning and outreach work.</p></div>
+      <div class="card"><h3 class="card-name"><span class="dot dot-yes"></span>Who it is for</h3><p>Senior professionals, consultants, and fractional experts with 8+ years of experience who are changing roles (full-time, fractional, or project-based) and want both the internal clarity and the practical system</p></div>
+      <div class="card"><h3 class="card-name"><span class="dot dot-no"></span>Who it is not for</h3><p>People looking for a passive course, a coding bootcamp, a pure AI agent, or a rescue program that does the work for them. Also not for those who mainly want therapy or who are not ready to do the positioning and outreach work</p></div>
     </div>
   </section>
 
   <!-- Why us -->
   <section class="sec">
     <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">Why us</h2></div>
-    <div class="duo">
-      <span class="person"><span class="avatar">M</span>Marina</span>
-      <span class="person"><span class="avatar">K</span>Katya</span>
+    <div class="team">
+      <div class="card">
+        <div class="person-head">
+          <img class="photo" src="marina.webp" alt="Marina" width="84" height="84" loading="lazy">
+          <div>
+            <h3 class="person-name">Marina</h3>
+            <div class="person-tags">Corporate · Venture capital · Founder</div>
+          </div>
+        </div>
+        <ul class="list">
+          <li>10+ years building her own portfolio career</li>
+          <li>PhD research on career transitions and self-authorisation to act</li>
+          <li>Master’s in Business Administration and Master’s in Psychology</li>
+          <li>Academically grounded methods for career transitions</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="person-head">
+          <span class="avatar" aria-hidden="true">K</span>
+          <div><h3 class="person-name">Katya</h3></div>
+        </div>
+        <p>Katya has hired, been through hiring processes, and builds AI systems for search and matching</p>
+      </div>
     </div>
-    <p class="body">Marina works with experienced professionals on internal authority, strengths, and how to hold position without the old title. Katya has hired, been through hiring processes, and builds AI systems for search and matching. Together we start with direction — because automating the search for the wrong roles only speeds up rejections.</p>
+    <p class="body together">Together we start with direction — because automating the search for the wrong roles only speeds up rejections</p>
   </section>
 
   <!-- CTA -->
   <section class="cta" id="apply">
-    <h2>Apply for a <span style="white-space:nowrap">30-minute</span> qualifying call.</h2>
-    <p>To book, fill out a short form. The call is free and doesn’t obligate you to anything — we’ll both see whether the program is a good fit and, if not, we’ll point you to useful next step.</p>
+    <h2>Apply for a <span style="white-space:nowrap">30-minute</span> qualifying call</h2>
+    <p>To book, fill out a short form. The call is free and doesn’t obligate you to anything — we’ll both see whether the program is a good fit and, if not, we’ll point you to useful next step</p>
     <!-- Replace FORM_URL with the link to your form -->
     <a class="btn" href="FORM_URL" target="_blank" rel="noopener">Apply for a 30-minute qualifying call <span aria-hidden="true">→</span></a>
   </section>
@@ -311,72 +339,79 @@
   (function(){
     var line = document.getElementById('status-line');
     var wait = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
+    var TYPE = 42, ERASE = 18;
 
-    // each scene: a lead status, then a timeline of what pops up next to it
+    // each scene: a lead status, then a timeline of what gets typed next to it
     var scenes = [
-      { lead:'I’m still in the role', c:'invite', steps:[
-        ['add','and quietly thinking of leaving'],
-        ['add','but think this will be a step down'],
+      { lead:'I’m still in the role', steps:[
+        ['type','and quietly thinking of leaving'],
         ['hold']
       ]},
-      { lead:'I’m already out', c:'accent', steps:[
-        ['add','figuring out what a fractional or portfolio path looks like'],
+      { lead:'I’m already out', steps:[
+        ['type','figuring out what a fractional or portfolio path looks like'],
         ['hold'],
-        ['drop'],
-        ['add','applying and getting nowhere'],
+        ['erase'],
+        ['type','applying and getting nowhere'],
         ['hold']
       ]},
-      { lead:'I’m in between jobs', c:'digest', steps:[
-        ['arrow'],
-        ['add','not sure how to talk about myself without the old title'],
+      { lead:'I’m in between jobs', steps:[
+        ['type','→', 'arrow'],
+        ['type','not sure how to talk about myself without the old title'],
         ['hold']
       ]}
     ];
 
-    function el(cls, text, c){
-      var e = document.createElement('span');
-      e.className = cls;
-      // leading space keeps a natural line-break point between phrases
-      e.textContent = (line.children.length ? ' ' : '') + text;
-      if (c) e.dataset.c = c;
-      line.appendChild(e);
-      return e;
-    }
-    function leave(nodes){
-      nodes.forEach(function(n){ n.classList.add('out'); });
-      return wait(300).then(function(){ nodes.forEach(function(n){ n.remove(); }); });
-    }
-
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       line.className = 'status-static';
       line.removeAttribute('aria-hidden');
-      [['invite','I’m still in the role','and quietly thinking of leaving but think this will be a step down'],
-       ['accent','I’m already out','applying and getting nowhere'],
-       ['digest','I’m in between jobs','→ not sure how to talk about myself without the old title']
+      [['I’m still in the role','and quietly thinking of leaving'],
+       ['I’m already out','applying and getting nowhere'],
+       ['I’m in between jobs','→ not sure how to talk about myself without the old title']
       ].forEach(function(r){
         var row = document.createElement('div'); row.className = 'status-line'; line.appendChild(row);
-        var a = document.createElement('span'); a.className = 'pill lead'; a.dataset.c = r[0]; a.textContent = r[1];
-        var b = document.createElement('span'); b.className = 'pill'; b.textContent = ' ' + r[2];
+        var a = document.createElement('span'); a.className = 'pill lead'; a.textContent = r[0];
+        var b = document.createElement('span'); b.className = 'pill'; b.textContent = ' ' + r[1];
         row.appendChild(a); row.appendChild(b);
       });
       return;
     }
 
+    var caret = document.createElement('span');
+    caret.className = 'caret';
+    line.appendChild(caret);
+
+    async function type(text, cls){
+      var span = document.createElement('span');
+      span.className = cls;
+      line.insertBefore(span, caret);
+      // leading space keeps a natural line-break point between phrases
+      var full = (line.children.length > 2 ? ' ' : '') + text;
+      caret.classList.add('busy');
+      for (var k = 1; k <= full.length; k++){ span.textContent = full.slice(0, k); await wait(TYPE); }
+      caret.classList.remove('busy');
+      return span;
+    }
+    async function erase(span){
+      caret.classList.add('busy');
+      while (span.textContent.length){ span.textContent = span.textContent.slice(0, -1); await wait(ERASE); }
+      span.remove();
+      caret.classList.remove('busy');
+    }
+
     (async function loop(){
       for (;;){
         for (var i = 0; i < scenes.length; i++){
-          var sc = scenes[i], added = [];
-          el('pill lead', sc.lead, sc.c);
-          await wait(900);
+          var sc = scenes[i], parts = [];
+          parts.push(await type(sc.lead, 'pill lead'));
+          await wait(500);
           for (var j = 0; j < sc.steps.length; j++){
             var st = sc.steps[j];
-            if (st[0] === 'add'){ added.push(el('pill', st[1])); await wait(1100); }
-            else if (st[0] === 'arrow'){ added.push(el('arrow', '→')); await wait(350); }
-            else if (st[0] === 'hold'){ await wait(1600); }
-            else if (st[0] === 'drop'){ await leave([added.pop()]); await wait(250); }
+            if (st[0] === 'type'){ parts.push(await type(st[1], st[2] || 'pill')); await wait(st[2] ? 150 : 600); }
+            else if (st[0] === 'hold'){ await wait(1800); }
+            else if (st[0] === 'erase'){ await erase(parts.pop()); await wait(300); }
           }
-          await leave(Array.prototype.slice.call(line.children));
-          await wait(300);
+          while (parts.length) await erase(parts.pop());
+          await wait(400);
         }
       }
     })();
