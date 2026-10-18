@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Role Accelerator</title>
-<meta name="description" content="Find Your Next Role helps experienced professionals claim their strengths and find the right role — full-time, fractional, or portfolio — using personal AI agents that work outside standard application routes">
+<meta name="description" content="Find Your Next Role helps experienced professionals claim their strengths and find the right role — full-time, fractional, or portfolio — building and using your personal AI agents that work outside standard application routes">
 <style>
   :root{
     --bg:#F4F3F9; --surface:#FFFFFF; --surface-2:#FBFAFE;
@@ -56,41 +56,32 @@
     font-family:var(--mono); font-size:12px; letter-spacing:.16em;
     text-transform:uppercase; color:var(--accent); font-weight:600;
   }
-  h1{
-    font-weight:800; letter-spacing:-.02em;
-    font-size:clamp(30px,5vw,54px); line-height:1.08; margin:.5em 0 .5em;
-    text-wrap:balance; max-width:22ch;
+  .hero{
+    min-height:calc(100svh - clamp(18px,4vw,40px));
+    display:flex; flex-direction:column; justify-content:center; padding:24px 0 40px;
   }
-  h1 .hi{color:var(--accent)}
-  .lede{font-size:clamp(17px,2.2vw,21px); color:var(--muted); max-width:62ch; text-wrap:pretty}
+  .subhead{
+    font-weight:700; letter-spacing:-.012em;
+    font-size:clamp(19px,2.4vw,26px); line-height:1.35; margin:clamp(28px,4vw,44px) 0 14px;
+    max-width:46ch; text-wrap:pretty;
+  }
+  .subhead .hi{color:var(--accent)}
+  .lede{font-size:clamp(16px,1.9vw,19px); color:var(--muted); max-width:62ch; text-wrap:pretty}
 
-  /* interactive statuses */
+  /* interactive statuses — the main hero */
   .status{
-    margin-top:30px; padding:16px; background:var(--surface);
-    border:1px solid var(--hairline); border-radius:16px; box-shadow:var(--shadow);
-    min-height:76px; display:flex; align-items:center;
+    font-size:clamp(30px,5vw,54px); font-weight:800; letter-spacing:-.02em; line-height:1.08;
+    min-height:3.3em; display:flex; align-items:flex-end;
   }
-  .status-line{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
-  .pill{
-    display:inline-flex; align-items:center; gap:8px; padding:8px 13px; border-radius:999px;
-    font-size:15.5px; line-height:1.3; font-weight:550; border:1px solid var(--hairline);
-    background:var(--surface-2); color:var(--ink);
-    animation:pop-in .42s cubic-bezier(.2,.9,.3,1.3) both;
-  }
-  .pill.lead{font-weight:700; border-color:transparent}
-  .pill.lead::before{
-    content:""; width:8px; height:8px; border-radius:50%; background:currentColor; flex:none;
-    animation:blink 1.6s ease-in-out infinite;
-  }
-  .pill.lead[data-c="invite"]{color:var(--invite); background:var(--invite-bg)}
-  .pill.lead[data-c="accent"]{color:var(--accent); background:var(--accent-soft)}
-  .pill.lead[data-c="digest"]{color:var(--digest); background:var(--digest-bg)}
-  .arrow{color:var(--muted); font-weight:700; animation:pop-in .3s ease both}
+  .status-line{display:block; max-width:22ch; text-wrap:balance}
+  .pill{display:inline; color:var(--ink); animation:pop-in .45s cubic-bezier(.2,.9,.3,1.2) both}
+  .pill.lead{color:var(--accent)}
+  .arrow{display:inline; color:var(--muted); animation:pop-in .3s ease both}
   .status-line .out{animation:pop-out .3s ease forwards}
-  @keyframes pop-in{from{opacity:0; transform:translateY(6px) scale(.92)}to{opacity:1; transform:none}}
-  @keyframes pop-out{to{opacity:0; transform:translateY(-6px) scale(.96)}}
+  @keyframes pop-in{from{opacity:0; filter:blur(6px)}to{opacity:1; filter:none}}
+  @keyframes pop-out{to{opacity:0; filter:blur(6px)}}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
-  .status-static{display:flex; flex-direction:column; gap:10px}
+  .status-static{display:flex; flex-direction:column; gap:.4em; font-size:.6em}
   .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
 
   .btn{
@@ -190,7 +181,7 @@
   .cta p{color:var(--muted); font-size:17px; max-width:60ch; margin:0 auto 26px}
 
   @media (max-width:560px){
-    .status{min-height:168px}
+    .status{min-height:4.4em}
     .price{grid-template-columns:1fr}
     .btn{width:100%; justify-content:center}
   }
@@ -201,11 +192,7 @@
 <div class="wrap"><main class="page">
 
   <!-- Hero -->
-  <header>
-    <div class="eyebrow">Full-time · Fractional · Portfolio</div>
-    <h1><span class="hi">Find Your Next Role</span> helps experienced professionals claim their strengths and find the right role — full-time, fractional, or portfolio — using personal AI agents that work outside standard application routes</h1>
-    <p class="lede">For experienced professionals (8+ years) — still in a company or already out — who need clarity on the next path and how to start moving.</p>
-
+  <header class="hero">
     <div class="status">
       <div class="status-line" id="status-line" aria-hidden="true"></div>
       <ul class="sr-only">
@@ -215,6 +202,9 @@
         <li>I’m in between jobs → not sure how to talk about myself without the old title</li>
       </ul>
     </div>
+
+    <h1 class="subhead"><span class="hi">Find Your Next Role</span> helps experienced professionals claim their strengths and find the right role — full-time, fractional, or portfolio — building and using your personal AI agents that work outside standard application routes</h1>
+    <p class="lede">For experienced professionals (8+ years) — still in a company or already out — who need clarity on the next path and how to start moving.</p>
 
     <div class="hero-cta"><a class="btn" href="#apply">Apply for a 30-minute qualifying call <span aria-hidden="true">→</span></a></div>
   </header>
@@ -345,7 +335,9 @@
 
     function el(cls, text, c){
       var e = document.createElement('span');
-      e.className = cls; e.textContent = text;
+      e.className = cls;
+      // leading space keeps a natural line-break point between phrases
+      e.textContent = (line.children.length ? ' ' : '') + text;
       if (c) e.dataset.c = c;
       line.appendChild(e);
       return e;
@@ -364,7 +356,7 @@
       ].forEach(function(r){
         var row = document.createElement('div'); row.className = 'status-line'; line.appendChild(row);
         var a = document.createElement('span'); a.className = 'pill lead'; a.dataset.c = r[0]; a.textContent = r[1];
-        var b = document.createElement('span'); b.className = 'pill'; b.textContent = r[2];
+        var b = document.createElement('span'); b.className = 'pill'; b.textContent = ' ' + r[2];
         row.appendChild(a); row.appendChild(b);
       });
       return;
