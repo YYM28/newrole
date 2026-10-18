@@ -1,139 +1,394 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Find Your Next Role</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Role Accelerator</title>
+<meta name="description" content="Find Your Next Role helps experienced professionals claim their strengths and find the right role — full-time, fractional, or portfolio — using personal AI agents that work outside standard application routes">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #09090b;
-    color: #fafafa;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 100px 28px;
+  :root{
+    --bg:#F4F3F9; --surface:#FFFFFF; --surface-2:#FBFAFE;
+    --ink:#171522; --muted:#666075; --hairline:#E6E3F0;
+    --accent:#7A3CF0; --accent-ink:#FFFFFF; --accent-soft:#F0E9FF;
+    --open:#08704E; --open-bg:#E4F7EF;
+    --invite:#B77400; --invite-bg:#FBF0DC;
+    --digest:#2563C9; --digest-bg:#E5EDFB;
+    --stop:#B4233C; --stop-bg:#FBE6EA;
+    --shadow:0 1px 2px rgba(23,21,34,.04),0 8px 24px -12px rgba(23,21,34,.12);
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
-  .hero {
-    max-width: 760px;
-    width: 100%;
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#100E17; --surface:#191622; --surface-2:#1F1B2B;
+      --ink:#F2F0F8; --muted:#9C95AC; --hairline:#2C2739;
+      --accent:#B196FF; --accent-ink:#100E17; --accent-soft:#241C3A;
+      --open:#3BE0A6; --open-bg:#0F2A22;
+      --invite:#E6B25A; --invite-bg:#2E2312;
+      --digest:#7FA9F0; --digest-bg:#141F33;
+      --stop:#F28A9C; --stop-bg:#2E151B;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 30px -14px rgba(0,0,0,.6);
+    }
   }
-  .label {
-    font-size: 0.75rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #71717a;
-    margin-bottom: 32px;
-    font-weight: 500;
+  :root[data-theme="dark"]{
+    --bg:#100E17; --surface:#191622; --surface-2:#1F1B2B;
+    --ink:#F2F0F8; --muted:#9C95AC; --hairline:#2C2739;
+    --accent:#B196FF; --accent-ink:#100E17; --accent-soft:#241C3A;
+    --open:#3BE0A6; --open-bg:#0F2A22;
+    --invite:#E6B25A; --invite-bg:#2E2312;
+    --digest:#7FA9F0; --digest-bg:#141F33;
+    --stop:#F28A9C; --stop-bg:#2E151B;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 30px -14px rgba(0,0,0,.6);
   }
-  .status {
-    font-size: clamp(2rem, 5vw, 3.1rem);
-    font-weight: 500;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
-    min-height: 2.6em;
-    margin-bottom: 16px;
-    color: #ffffff;
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); line-height:1.55;
+    -webkit-font-smoothing:antialiased; font-feature-settings:"kern";
   }
-  .thought {
-    font-size: 1.35rem;
-    color: #a1a1aa;
-    min-height: 1.7em;
-    margin-bottom: 64px;
-    font-weight: 400;
-    letter-spacing: -0.01em;
+  .wrap{padding:clamp(18px,4vw,40px) 16px 72px}
+  .page{max-width:1080px; margin:0 auto}
+  p{margin:0}
+
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--accent); font-weight:600;
   }
-  .cta {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: #d4d4d8;
-    max-width: 520px;
+  h1{
+    font-weight:800; letter-spacing:-.02em;
+    font-size:clamp(30px,5vw,54px); line-height:1.08; margin:.5em 0 .5em;
+    text-wrap:balance; max-width:22ch;
   }
-  .cta strong {
-    color: #ffffff;
-    font-weight: 560;
+  h1 .hi{color:var(--accent)}
+  .lede{font-size:clamp(17px,2.2vw,21px); color:var(--muted); max-width:62ch; text-wrap:pretty}
+
+  /* interactive statuses */
+  .status{
+    margin-top:30px; padding:16px; background:var(--surface);
+    border:1px solid var(--hairline); border-radius:16px; box-shadow:var(--shadow);
+    min-height:76px; display:flex; align-items:center;
   }
-  .status, .thought {
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  .status-line{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+  .pill{
+    display:inline-flex; align-items:center; gap:8px; padding:8px 13px; border-radius:999px;
+    font-size:15.5px; line-height:1.3; font-weight:550; border:1px solid var(--hairline);
+    background:var(--surface-2); color:var(--ink);
+    animation:pop-in .42s cubic-bezier(.2,.9,.3,1.3) both;
   }
-  .cursor {
-    display: inline-block;
-    width: 1.5px;
-    height: 0.82em;
-    background: #fafafa;
-    margin-left: 3px;
-    vertical-align: text-bottom;
-    animation: blink 1.2s step-end infinite;
+  .pill.lead{font-weight:700; border-color:transparent}
+  .pill.lead::before{
+    content:""; width:8px; height:8px; border-radius:50%; background:currentColor; flex:none;
+    animation:blink 1.6s ease-in-out infinite;
   }
-  @keyframes blink {
-    0%, 45% { opacity: 1; }
-    50%, 100% { opacity: 0; }
+  .pill.lead[data-c="invite"]{color:var(--invite); background:var(--invite-bg)}
+  .pill.lead[data-c="accent"]{color:var(--accent); background:var(--accent-soft)}
+  .pill.lead[data-c="digest"]{color:var(--digest); background:var(--digest-bg)}
+  .arrow{color:var(--muted); font-weight:700; animation:pop-in .3s ease both}
+  .status-line .out{animation:pop-out .3s ease forwards}
+  @keyframes pop-in{from{opacity:0; transform:translateY(6px) scale(.92)}to{opacity:1; transform:none}}
+  @keyframes pop-out{to{opacity:0; transform:translateY(-6px) scale(.96)}}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+  .status-static{display:flex; flex-direction:column; gap:10px}
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+  .btn{
+    display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+    background:var(--accent); color:var(--accent-ink); font-weight:700; font-size:16px;
+    padding:14px 22px; border-radius:12px; transition:transform .16s ease, filter .16s ease;
   }
+  .btn:hover{transform:translateY(-2px); filter:brightness(1.06)}
+  .btn:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+  .hero-cta{margin-top:28px}
+
+  /* sections */
+  .sec{margin-top:clamp(48px,7vw,72px)}
+  .sec-head{
+    display:flex; align-items:baseline; gap:16px; padding-bottom:14px;
+    border-bottom:1.5px solid var(--hairline); margin-bottom:22px; flex-wrap:wrap;
+  }
+  .sec-num{font-family:var(--mono); font-size:13px; font-weight:600; color:var(--accent); letter-spacing:.05em; flex:none}
+  .sec-title{font-size:clamp(22px,3.2vw,30px); font-weight:750; letter-spacing:-.015em; margin:0}
+  .sec-note{color:var(--muted); font-size:16px; flex-basis:100%; max-width:70ch}
+  .body{font-size:17px; max-width:70ch; text-wrap:pretty}
+  .body + .body{margin-top:14px}
+  .muted{color:var(--muted)}
+
+  .card{
+    background:var(--surface); border:1px solid var(--hairline); border-radius:14px;
+    padding:20px 22px; box-shadow:var(--shadow);
+    transition:transform .16s ease, border-color .16s ease;
+  }
+  .card:hover{transform:translateY(-2px); border-color:var(--accent)}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; align-items:stretch}
+  .card-name{font-weight:700; font-size:18px; letter-spacing:-.01em; margin:0 0 6px}
+  .card p{color:var(--muted); font-size:15.5px}
+  .card-num{font-family:var(--mono); font-size:12px; font-weight:650; color:var(--accent); letter-spacing:.06em; margin-bottom:10px; display:block}
+
+  .mirror{
+    margin-top:clamp(48px,7vw,72px); padding:clamp(22px,4vw,36px);
+    background:var(--surface); border:1px solid var(--hairline); border-left:4px solid var(--accent);
+    border-radius:16px; box-shadow:var(--shadow);
+  }
+  .mirror .first{font-size:clamp(19px,2.6vw,24px); font-weight:650; letter-spacing:-.01em; max-width:52ch}
+  .mirror .second{margin-top:14px; font-size:17px; color:var(--muted); max-width:70ch}
+
+  .product{font-size:clamp(32px,5vw,48px); font-weight:800; letter-spacing:-.02em; line-height:1.05; margin:0 0 12px}
+  .product .hi{color:var(--accent)}
+  .nots{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px}
+  .not{
+    font-family:var(--mono); font-size:12.5px; font-weight:600; letter-spacing:.03em;
+    padding:6px 10px; border-radius:7px; background:var(--surface); border:1px solid var(--hairline); color:var(--muted);
+  }
+  .not:last-child{color:var(--accent); border-color:var(--accent); background:var(--accent-soft)}
+
+  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px}
+  ul.list{margin:8px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px}
+  ul.list li{display:flex; gap:10px; color:var(--muted); font-size:15.5px}
+  ul.list li::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none; margin-top:.6em}
+  .foot{margin-top:16px; font-size:15px; color:var(--muted)}
+
+  .checks{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:10px; margin-top:16px}
+  .check{
+    display:flex; gap:12px; align-items:flex-start; padding:14px 16px;
+    background:var(--surface); border:1px solid var(--hairline); border-radius:12px; font-size:15.5px;
+  }
+  .check .tick{
+    flex:none; width:22px; height:22px; border-radius:6px; display:grid; place-items:center;
+    background:var(--open-bg); color:var(--open); font-size:13px; font-weight:800;
+  }
+
+  .price{display:grid; grid-template-columns:minmax(0,auto) minmax(0,1fr); gap:clamp(16px,4vw,40px); align-items:center}
+  .amount{font-size:clamp(48px,8vw,80px); font-weight:800; letter-spacing:-.03em; line-height:1; color:var(--accent)}
+  .tag{
+    display:inline-block; font-family:var(--mono); font-size:12px; font-weight:650; letter-spacing:.06em;
+    text-transform:uppercase; padding:4px 9px; border-radius:6px; margin-top:14px;
+    color:var(--invite); background:var(--invite-bg);
+  }
+
+  .fit .card-name{display:flex; align-items:center; gap:10px}
+  .fit .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .dot-yes{background:var(--open)} .dot-no{background:var(--stop)}
+
+  .duo{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px}
+  .person{
+    display:inline-flex; align-items:center; gap:10px; padding:8px 14px 8px 8px;
+    background:var(--surface); border:1px solid var(--hairline); border-radius:999px; font-weight:650;
+  }
+  .avatar{
+    width:30px;height:30px;border-radius:50%; display:grid; place-items:center;
+    background:var(--accent-soft); color:var(--accent); font-family:var(--mono); font-size:13px; font-weight:700;
+  }
+
+  .cta{
+    margin-top:clamp(56px,8vw,88px); padding:clamp(26px,5vw,48px);
+    background:var(--surface); border:1px solid var(--hairline); border-radius:20px; box-shadow:var(--shadow);
+    text-align:center;
+  }
+  .cta h2{font-size:clamp(26px,4vw,40px); font-weight:800; letter-spacing:-.02em; line-height:1.1; margin:0 auto 14px; max-width:22ch; text-wrap:balance}
+  .cta p{color:var(--muted); font-size:17px; max-width:60ch; margin:0 auto 26px}
+
+  @media (max-width:560px){
+    .status{min-height:168px}
+    .price{grid-template-columns:1fr}
+    .btn{width:100%; justify-content:center}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
 </style>
 </head>
 <body>
-  <div class="hero">
-    <div class="label">Find Your Next Role</div>
-    
-    <div class="status" id="status">I’m still in the role and quietly looking<span class="cursor"></span></div>
-    <div class="thought" id="thought">trying to find a new role in a new company</div>
-    
-    <p class="cta">
-      <strong>Find Your Next Role</strong> helps you claim your strengths, aim at roles the market pays for, and run a search that doesn’t depend on the old title.
-    </p>
-  </div>
+<div class="wrap"><main class="page">
+
+  <!-- Hero -->
+  <header>
+    <div class="eyebrow">Full-time · Fractional · Portfolio</div>
+    <h1><span class="hi">Find Your Next Role</span> helps experienced professionals claim their strengths and find the right role — full-time, fractional, or portfolio — using personal AI agents that work outside standard application routes</h1>
+    <p class="lede">For experienced professionals (8+ years) — still in a company or already out — who need clarity on the next path and how to start moving.</p>
+
+    <div class="status">
+      <div class="status-line" id="status-line" aria-hidden="true"></div>
+      <ul class="sr-only">
+        <li>I’m still in the role and quietly thinking of leaving but think this will be a step down</li>
+        <li>I’m already out figuring out what a fractional or portfolio path looks like</li>
+        <li>I’m already out applying and getting nowhere</li>
+        <li>I’m in between jobs → not sure how to talk about myself without the old title</li>
+      </ul>
+    </div>
+
+    <div class="hero-cta"><a class="btn" href="#apply">Apply for a 30-minute qualifying call <span aria-hidden="true">→</span></a></div>
+  </header>
+
+  <!-- Pain mirror -->
+  <section class="mirror">
+    <p class="first">You’ve updated your CV a few times. You’ve scrolled LinkedIn. You’ve tried a couple of AI tools.</p>
+    <p class="second">But you’re still not sure how to present yourself in a new context, which roles are realistic, or how to stop applying to things that go nowhere. The longer it takes, the more the previous identity and the fear of a step down start to matter.</p>
+  </section>
+
+  <!-- Why now -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">Why now</h2></div>
+    <p class="body">AI is rewriting which skills matter and how companies hire. At the same time, the ways of working have expanded — full-time roles, fractional work, solo consulting, and portfolio careers are all now realistic options.</p>
+  </section>
+
+  <!-- What this is -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">What this is</h2></div>
+    <p class="product"><span class="hi">Role Accelerator</span></p>
+    <p class="body muted" style="margin-bottom:20px">An 8-session program that combines two things most people try to do separately:</p>
+    <div class="grid">
+      <div class="card"><span class="card-num">1</span><h3 class="card-name">Direction</h3><p>Figure out what you’re actually good at, what you don’t want anymore, and what shape of work fits you.</p></div>
+      <div class="card"><span class="card-num">2</span><h3 class="card-name">System</h3><p>Build and personalise an AI agent that searches for roles matching your profile and path, outside standard application routes.</p></div>
+    </div>
+    <p class="body" style="margin-top:20px">Two experts work with you: one on direction, one on the AI system and hiring reality.</p>
+    <div class="nots"><span class="not">Not a course.</span><span class="not">Not a community.</span><span class="not">Not an agent you switch on alone.</span></div>
+  </section>
+
+  <!-- How it works -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">How it works</h2><p class="sec-note">The program is individual. We adjust the focus based on your situation.</p></div>
+    <div class="steps">
+      <div class="card"><span class="card-num">1</span><h3 class="card-name">Direction</h3><p>We review your professional assets and skills, what energises you, what you no longer want, and what you can already claim. This becomes the basis for realistic positioning.</p></div>
+      <div class="card"><span class="card-num">2</span><h3 class="card-name">Match to the market</h3><p>We map roles and formats that fit your profile — full-time, fractional, project-based, or portfolio — and translate your strengths into how the market describes and pays for them.</p></div>
+      <div class="card"><span class="card-num">3</span><h3 class="card-name">Materials and system</h3>
+        <ul class="list">
+          <li>Build ready-to-send materials (master CV + LinkedIn)</li>
+          <li>Set up a personalised AI search system</li>
+          <li>Activate your network</li>
+          <li>Prepare for conversations</li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot">This sequence works whether you’re looking for a full-time role or building a fractional / portfolio path.</p>
+  </section>
+
+  <!-- What you will have -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">What you will have</h2><p class="sec-note">Enough clarity to stop guessing and enough practical support to take the next step.</p></div>
+    <p class="body" style="font-weight:650">You’ll leave with:</p>
+    <div class="checks">
+      <div class="check"><span class="tick" aria-hidden="true">✓</span>A clearer understanding of what fits you and what doesn’t</div>
+      <div class="check"><span class="tick" aria-hidden="true">✓</span>Language to talk about yourself that feels accurate</div>
+      <div class="check"><span class="tick" aria-hidden="true">✓</span>A short list of realistic options and how to approach them</div>
+      <div class="check"><span class="tick" aria-hidden="true">✓</span>A map of relevant roles and directions</div>
+      <div class="check"><span class="tick" aria-hidden="true">✓</span>A master CV and professional profile</div>
+      <div class="check"><span class="tick" aria-hidden="true">✓</span>A personalised AI agent set up for your search</div>
+    </div>
+  </section>
+
+  <!-- Investment -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">Investment</h2></div>
+    <div class="card price">
+      <div class="amount">€1500</div>
+      <div>
+        <p class="body" style="color:var(--ink); font-weight:650">€1500 for the 8-session Role Accelerator.</p>
+        <p class="body" style="margin-top:8px">Includes direction work, personalised AI search system, master CV + LinkedIn, and conversation preparation.</p>
+        <span class="tag">Limited places per cycle.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fit -->
+  <section class="sec">
+    <div class="grid fit">
+      <div class="card"><h3 class="card-name"><span class="dot dot-yes"></span>Who it is for</h3><p>Senior professionals, consultants, and fractional experts with 8+ years of experience who are changing roles (full-time, fractional, or project-based) and want both the internal clarity and the practical system.</p></div>
+      <div class="card"><h3 class="card-name"><span class="dot dot-no"></span>Who it is not for</h3><p>People looking for a passive course, a coding bootcamp, a pure AI agent, or a rescue program that does the work for them. Also not for those who mainly want therapy or who are not ready to do the positioning and outreach work.</p></div>
+    </div>
+  </section>
+
+  <!-- Why us -->
+  <section class="sec">
+    <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">Why us</h2></div>
+    <div class="duo">
+      <span class="person"><span class="avatar">M</span>Marina</span>
+      <span class="person"><span class="avatar">K</span>Katya</span>
+    </div>
+    <p class="body">Marina works with experienced professionals on internal authority, strengths, and how to hold position without the old title. Katya has hired, been through hiring processes, and builds AI systems for search and matching. Together we start with direction — because automating the search for the wrong roles only speeds up rejections.</p>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="apply">
+    <h2>Apply for a <span style="white-space:nowrap">30-minute</span> qualifying call.</h2>
+    <p>To book, fill out a short form. The call is free and doesn’t obligate you to anything — we’ll both see whether the program is a good fit and, if not, we’ll point you to useful next step.</p>
+    <!-- Replace FORM_URL with the link to your form -->
+    <a class="btn" href="FORM_URL" target="_blank" rel="noopener">Apply for a 30-minute qualifying call <span aria-hidden="true">→</span></a>
+  </section>
+
+</main></div>
 
 <script>
-const pairs = [
-  {
-    status: "I’m still in the role and quietly looking",
-    thought: "trying to find a new role in a new company"
-  },
-  {
-    status: "thinking of leaving",
-    thought: "figuring out what a fractional or portfolio path even looks like"
-  },
-  {
-    status: "already out",
-    thought: "applying and getting nowhere"
-  },
-  {
-    status: "in between jobs",
-    thought: "not sure how to talk about myself without the old title"
-  },
-  {
-    status: "burned out but still employed",
-    thought: "scared this will be a step down"
-  }
-];
+  (function(){
+    var line = document.getElementById('status-line');
+    var wait = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
 
-let index = 0;
+    // each scene: a lead status, then a timeline of what pops up next to it
+    var scenes = [
+      { lead:'I’m still in the role', c:'invite', steps:[
+        ['add','and quietly thinking of leaving'],
+        ['add','but think this will be a step down'],
+        ['hold']
+      ]},
+      { lead:'I’m already out', c:'accent', steps:[
+        ['add','figuring out what a fractional or portfolio path looks like'],
+        ['hold'],
+        ['drop'],
+        ['add','applying and getting nowhere'],
+        ['hold']
+      ]},
+      { lead:'I’m in between jobs', c:'digest', steps:[
+        ['arrow'],
+        ['add','not sure how to talk about myself without the old title'],
+        ['hold']
+      ]}
+    ];
 
-function rotate() {
-  const statusEl = document.getElementById("status");
-  const thoughtEl = document.getElementById("thought");
+    function el(cls, text, c){
+      var e = document.createElement('span');
+      e.className = cls; e.textContent = text;
+      if (c) e.dataset.c = c;
+      line.appendChild(e);
+      return e;
+    }
+    function leave(nodes){
+      nodes.forEach(function(n){ n.classList.add('out'); });
+      return wait(300).then(function(){ nodes.forEach(function(n){ n.remove(); }); });
+    }
 
-  statusEl.style.opacity = "0";
-  thoughtEl.style.opacity = "0";
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      line.className = 'status-static';
+      line.removeAttribute('aria-hidden');
+      [['invite','I’m still in the role','and quietly thinking of leaving but think this will be a step down'],
+       ['accent','I’m already out','applying and getting nowhere'],
+       ['digest','I’m in between jobs','→ not sure how to talk about myself without the old title']
+      ].forEach(function(r){
+        var row = document.createElement('div'); row.className = 'status-line'; line.appendChild(row);
+        var a = document.createElement('span'); a.className = 'pill lead'; a.dataset.c = r[0]; a.textContent = r[1];
+        var b = document.createElement('span'); b.className = 'pill'; b.textContent = r[2];
+        row.appendChild(a); row.appendChild(b);
+      });
+      return;
+    }
 
-  setTimeout(() => {
-    index = (index + 1) % pairs.length;
-    const current = pairs[index];
-
-    statusEl.innerHTML = current.status + '<span class="cursor"></span>';
-    thoughtEl.textContent = current.thought;
-
-    statusEl.style.opacity = "1";
-    thoughtEl.style.opacity = "1";
-  }, 500);
-}
-
-setInterval(rotate, 4800);
+    (async function loop(){
+      for (;;){
+        for (var i = 0; i < scenes.length; i++){
+          var sc = scenes[i], added = [];
+          el('pill lead', sc.lead, sc.c);
+          await wait(900);
+          for (var j = 0; j < sc.steps.length; j++){
+            var st = sc.steps[j];
+            if (st[0] === 'add'){ added.push(el('pill', st[1])); await wait(1100); }
+            else if (st[0] === 'arrow'){ added.push(el('arrow', '→')); await wait(350); }
+            else if (st[0] === 'hold'){ await wait(1600); }
+            else if (st[0] === 'drop'){ await leave([added.pop()]); await wait(250); }
+          }
+          await leave(Array.prototype.slice.call(line.children));
+          await wait(300);
+        }
+      }
+    })();
+  })();
 </script>
 </body>
 </html>
-
-
-После замены сделай hard refresh (Ctrl+Shift+R / Cmd+Shift+R). Страница должна показать чистый тёмный hero с работающей сменой статусов.
