@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Role Accelerator</title>
-<meta name="description" content="Find Your Next Role helps experienced professionals claim their strengths and land the right full-time, fractional or portfolio role with personal AI agents that search outside standard application routes">
+<meta name="description" content="Find your next role. Even if you don’t know what it is yet. We help experienced people name their strengths, pick the right path, and set up an AI agent that finds roles most people never see">
 <style>
   :root{
     --bg:#F4F3F9; --surface:#FFFFFF; --surface-2:#FBFAFE;
@@ -67,6 +67,13 @@
   }
   .subhead .hi{color:var(--accent)}
   .lede{font-size:clamp(16px,1.9vw,19px); color:var(--muted); max-width:62ch; text-wrap:pretty}
+  .fit-intro{color:var(--ink); font-weight:650}
+  .fit-list{
+    list-style:none; margin:10px 0 0; padding:0; display:grid; gap:8px 28px;
+    grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); max-width:760px;
+  }
+  .fit-list li{display:flex; gap:10px; font-size:clamp(15px,1.7vw,17px); color:var(--muted)}
+  .fit-list li::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none; margin-top:.6em}
 
   /* interactive statuses — the main hero */
   .status{
@@ -211,10 +218,16 @@
       </ul>
     </div>
 
-    <h1 class="subhead"><span class="hi">Find Your Next Role</span> helps experienced professionals claim their strengths and land the right full-time, fractional or portfolio role with personal AI agents that search outside standard application routes</h1>
-    <p class="lede">For professionals with 8+ years of experience, still in a company or already out, who need clarity on the next path and how to start moving</p>
+    <h1 class="subhead"><span class="hi">Find your next role.</span> Even if you don’t know what it is yet. We help experienced people name their strengths, pick the right path, and set up an AI agent that finds roles most people never see</h1>
+    <p class="lede fit-intro">This is for you if:</p>
+    <ul class="fit-list">
+      <li>You have 8+ years of experience</li>
+      <li>You’ve sent dozens of applications and hardly heard back</li>
+      <li>You can’t explain what you do without your old job title</li>
+      <li>Fractional work sounds interesting, but you don’t know how to get your first client</li>
+    </ul>
 
-    <div class="hero-cta"><a class="btn" href="#apply">Apply for a 30-minute qualifying call <span aria-hidden="true">→</span></a></div>
+    <div class="hero-cta"><a class="btn" href="https://cal.com/your-next-role/30min" target="_blank" rel="noopener">Book a free 30-min call. Get your first plan <span aria-hidden="true">→</span></a></div>
   </header>
 
   <!-- Pain mirror -->
@@ -244,7 +257,7 @@
 
   <!-- How it works -->
   <section class="sec">
-    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">How it works</h2><p class="sec-note">The program is individual. We adjust the focus based on your situation</p></div>
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">How it works</h2><p class="sec-note">The program consists of 1:1 individual sessions with executive mentors. We adjust the focus based on your situation</p></div>
     <div class="steps">
       <div class="card"><span class="card-num">1</span><h3 class="card-name">Direction</h3><p>We review your professional assets and skills, what energises you, what you no longer want, and what you can already claim. This becomes the basis for realistic positioning</p></div>
       <div class="card"><span class="card-num">2</span><h3 class="card-name">Match to the market</h3><p>We map roles and formats that fit your profile — full-time, fractional, project-based, or portfolio — and translate your strengths into how the market describes and pays for them</p></div>
@@ -260,17 +273,14 @@
     <p class="foot">This sequence works whether you’re looking for a full-time role or building a fractional / portfolio path</p>
   </section>
 
-  <!-- What you will have -->
+  <!-- What you will walk away with -->
   <section class="sec">
-    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">What you will have</h2><p class="sec-note">Enough clarity to stop guessing and enough practical support to take the next step</p></div>
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">What you will walk away with</h2><p class="sec-note">Enough clarity to stop guessing and enough practical support to take the next step</p></div>
     <p class="body" style="font-weight:650">You’ll leave with:</p>
     <div class="checks">
-      <div class="check"><span class="tick" aria-hidden="true">✓</span>A clearer understanding of what fits you and what doesn’t</div>
-      <div class="check"><span class="tick" aria-hidden="true">✓</span>Language to talk about yourself that feels accurate</div>
-      <div class="check"><span class="tick" aria-hidden="true">✓</span>A short list of realistic options and how to approach them</div>
-      <div class="check"><span class="tick" aria-hidden="true">✓</span>A map of relevant roles and directions</div>
-      <div class="check"><span class="tick" aria-hidden="true">✓</span>A master CV and professional profile</div>
-      <div class="check"><span class="tick" aria-hidden="true">✓</span>A personalised AI agent set up for your search</div>
+      <div class="check"><span class="tick" aria-hidden="true">✓</span>A clear idea of which roles fit you, and which don’t</div>
+      <div class="check"><span class="tick" aria-hidden="true">✓</span>A CV and LinkedIn profile ready to send</div>
+      <div class="check"><span class="tick" aria-hidden="true">✓</span>Your own AI agent searching for you</div>
     </div>
   </section>
 
@@ -329,8 +339,7 @@
   <section class="cta" id="apply">
     <h2>Apply for a <span style="white-space:nowrap">30-minute</span> qualifying call</h2>
     <p>To book, fill out a short form. The call is free and doesn’t obligate you to anything — we’ll both see whether the program is a good fit and, if not, we’ll point you to useful next step</p>
-    <!-- Replace FORM_URL with the link to your form -->
-    <a class="btn" href="FORM_URL" target="_blank" rel="noopener">Apply for a 30-minute qualifying call <span aria-hidden="true">→</span></a>
+    <a class="btn" href="https://cal.com/your-next-role/30min" target="_blank" rel="noopener">Book a free 30-min call. Get your first plan <span aria-hidden="true">→</span></a>
   </section>
 
 </main></div>
